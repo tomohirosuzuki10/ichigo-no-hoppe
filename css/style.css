@@ -1,0 +1,200 @@
+/* =======================================================
+   いちごのほっぺ農園 — style.css
+   中央シンメトリー / 白基調・セクションごとに淡色を交互
+   ======================================================= */
+
+:root{
+  --ink:#3a3631;
+  --muted:#8c857a;
+  --berry:#b14a5e;
+  --berry-deep:#8f3a4b;
+  --sage:#8c9a7c;
+  --sage-deep:#5f6f50;
+  --line:#e6e0d4;
+  /* セクション背景：白を基調に淡い色を交互に */
+  --sec-cream:#f6f3eb;
+  --sec-white:#ffffff;
+  --sec-rose:#fbf3f3;
+  --sec-sage:#eef3ea;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;color:var(--ink);background:var(--sec-white);
+  font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;
+  -webkit-font-smoothing:antialiased;line-height:1.8;
+}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+section,header,footer{padding-left:24px;padding-right:24px;}
+.wrap{max-width:1000px;margin:0 auto;}
+
+/* ---- 共通の見出し（中央シンメトリーの目印） ---- */
+.sec-head{text-align:center;margin:0 auto 46px;}
+.sec-head .eyebrow{font-family:"Jost",sans-serif;letter-spacing:.42em;font-size:11.5px;color:var(--berry);}
+.sec-head h2{font-family:"Shippori Mincho",serif;font-weight:500;letter-spacing:.12em;
+  font-size:clamp(24px,3.6vw,34px);margin:16px 0 18px;}
+.sec-head .divider{display:inline-flex;align-items:center;gap:14px;justify-content:center;}
+.sec-head .divider i{width:46px;height:1px;background:var(--line);display:block;}
+.sec-head .divider svg{width:16px;height:20px;}
+
+/* ===================== HERO ===================== */
+.hero{position:relative;overflow:hidden;background:#1a1210;padding-top:40px;padding-bottom:48px;}
+.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:1;pointer-events:none;}
+.hero-inner{position:relative;z-index:2;}
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;}
+.hero-slide.active{opacity:1;}
+.hero .brandc .lt{color:#fff;}
+.hero .brandc .lt small{color:rgba(255,255,255,0.72);}
+.hero .tate .l1{color:#fff;}
+.hero .tate .l2{color:rgba(255,255,255,0.72);}
+.hero .nav-row{color:rgba(255,255,255,0.75);}
+.hero .nav-row a:hover{color:#fff;}
+.hero .nav-row a::after{background:#fff;}
+.hero .scroll-cue{color:rgba(255,255,255,0.6);}
+.hero .scroll-cue .ln{background:rgba(255,255,255,0.25);}
+.hero-inner{max-width:1000px;margin:0 auto;text-align:center;}
+.brandc{display:inline-flex;flex-direction:column;align-items:center;gap:12px;}
+.brandc .mark{width:54px;height:54px;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#c66076,var(--berry) 55%,var(--berry-deep));}
+.brandc .lt{font-family:"Jost",sans-serif;font-weight:500;letter-spacing:.34em;font-size:17px;color:var(--berry);}
+.brandc .lt small{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;
+  letter-spacing:.22em;font-size:11.5px;color:var(--muted);margin-top:8px;}
+.stage{display:flex;align-items:center;justify-content:center;gap:30px;margin:42px 0 4px;}
+.portrait{width:340px;max-width:64vw;height:400px;border-radius:2px;overflow:hidden;}
+.portrait img{width:100%;height:100%;object-fit:cover;}
+.tate{display:flex;flex-direction:row-reverse;gap:.55em;writing-mode:vertical-rl;height:350px;}
+.tate .l1{font-family:"Shippori Mincho",serif;font-weight:500;letter-spacing:.34em;font-size:20px;color:var(--ink);}
+.tate .l2{font-family:"Shippori Mincho",serif;font-weight:400;letter-spacing:.3em;font-size:14px;color:var(--muted);}
+.nav-row{margin-top:38px;display:flex;gap:34px;justify-content:center;flex-wrap:wrap;
+  font-family:"Jost",sans-serif;letter-spacing:.2em;font-size:12.5px;color:var(--muted);}
+.nav-row a{position:relative;padding-bottom:4px;transition:.2s;}
+.nav-row a::after{content:"";position:absolute;left:50%;right:50%;bottom:0;height:1px;background:var(--berry);transition:.25s;}
+.nav-row a:hover{color:var(--berry);}
+.nav-row a:hover::after{left:0;right:0;}
+.scroll-cue{margin-top:40px;font-family:"Jost",sans-serif;letter-spacing:.3em;font-size:10px;color:var(--muted);}
+.scroll-cue .ln{display:block;width:1px;height:34px;margin:10px auto 0;background:var(--line);position:relative;overflow:hidden;}
+.scroll-cue .ln::after{content:"";position:absolute;top:-34px;left:0;width:1px;height:34px;background:var(--berry);animation:drop 2.4s ease-in-out infinite;}
+@keyframes drop{0%{top:-34px;}60%,100%{top:34px;}}
+
+/* ===================== ABOUT（農園の紹介） ===================== */
+.about{background:var(--sec-white);padding-top:84px;padding-bottom:84px;}
+.about .lead{max-width:660px;margin:0 auto;text-align:center;font-family:"Shippori Mincho",serif;
+  font-size:16px;line-height:2.5;color:#534c43;}
+.about .lead em{color:var(--berry);font-style:normal;}
+
+/* 流れてくる写真（マーキー） */
+.flow{margin:54px 0 0;padding:20px 0;overflow:hidden;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+.flow-track{display:flex;gap:64px;width:max-content;animation:flow 70s linear infinite;}
+.flow:hover .flow-track{animation-play-state:paused;}
+.flow img{height:300px;width:400px;min-width:400px;object-fit:cover;border-radius:2px;flex-shrink:0;}
+@keyframes flow{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+
+.features{display:flex;justify-content:center;gap:54px;margin:64px auto 0;flex-wrap:wrap;text-align:center;}
+.features .f{max-width:200px;}
+.features .f .ic{width:42px;height:42px;margin:0 auto 14px;color:var(--sage-deep);}
+.features .f h3{font-family:"Shippori Mincho",serif;font-weight:500;font-size:16px;letter-spacing:.06em;margin:0 0 8px;}
+.features .f p{font-size:13px;color:var(--muted);line-height:1.9;font-weight:300;margin:0;}
+
+/* ===================== EVENT（いちご狩り・スムージー販売） ===================== */
+.event{background:var(--sec-cream);padding-top:84px;padding-bottom:84px;}
+.event-meta{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
+  border:1px solid var(--line);border-radius:3px;padding:28px 40px;
+  max-width:580px;margin:0 auto 70px;}
+.event-meta .em{text-align:center;}
+.event-meta .em-label{display:block;font-family:"Jost",sans-serif;letter-spacing:.22em;
+  font-size:10.5px;color:var(--berry);margin-bottom:8px;}
+.event-meta .em-val{font-family:"Shippori Mincho",serif;font-size:20px;font-weight:500;
+  color:var(--ink);letter-spacing:.08em;}
+.ev-block{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;
+  max-width:1000px;margin:0 auto 70px;padding:0 24px;}
+.ev-rev .ev-photo{order:2;}
+.ev-rev .ev-content{order:1;flex-direction:row-reverse;}
+.ev-photo{height:460px;overflow:hidden;border-radius:2px;}
+.ev-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.ev-block:hover .ev-photo img{transform:scale(1.04);}
+.ev-content{display:flex;align-items:center;gap:28px;}
+.ev-desc{flex:1;font-family:"Shippori Mincho",serif;font-size:15px;
+  line-height:2.5;color:#534c43;font-weight:400;}
+.ev-title{display:flex;flex-direction:column-reverse;align-items:center;gap:14px;}
+.ev-title h3{writing-mode:vertical-rl;font-family:"Shippori Mincho",serif;font-weight:500;
+  font-size:clamp(28px,4vw,46px);letter-spacing:.14em;margin:0;color:var(--ink);}
+.ev-label{writing-mode:vertical-rl;font-family:"Jost",sans-serif;
+  letter-spacing:.32em;font-size:10px;color:var(--berry);}
+@media(max-width:760px){
+  .ev-block{grid-template-columns:1fr;gap:28px;margin-bottom:50px;}
+  .ev-rev .ev-photo,.ev-rev .ev-content{order:unset;}
+  .ev-rev .ev-content{flex-direction:row;}
+}
+
+/* ===================== STRAWBERRY（イチゴの紹介） ===================== */
+.berries{background:var(--sec-rose);padding-top:84px;padding-bottom:84px;}
+.variety-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:920px;margin:0 auto;}
+.v-card{background:#fff;border:1px solid #f0e3e3;border-radius:3px;overflow:hidden;text-align:center;
+  transition:transform .25s,box-shadow .25s;}
+.v-card:hover{transform:translateY(-5px);box-shadow:0 22px 40px -26px rgba(140,60,75,.45);}
+.v-card .thumb{height:200px;overflow:hidden;}
+.v-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.v-card:hover .thumb img{transform:scale(1.06);}
+.v-card .body{padding:22px 20px 26px;}
+.v-card .jp{font-family:"Shippori Mincho",serif;font-weight:600;font-size:19px;letter-spacing:.08em;color:var(--ink);}
+.v-card .en{font-family:"Jost",sans-serif;letter-spacing:.24em;font-size:10.5px;color:var(--berry);margin-top:5px;}
+.v-card p{font-size:13px;color:#6a6258;line-height:1.95;margin:14px 0 0;font-weight:300;}
+.berries .note{text-align:center;margin:42px auto 0;font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em;}
+
+/* ===================== ACCESS（アクセス） ===================== */
+.access{background:var(--sec-sage);padding-top:84px;padding-bottom:84px;}
+.access .map{max-width:880px;height:300px;margin:0 auto 40px;border-radius:3px;border:1px solid #dfe6d6;
+  background:linear-gradient(135deg,#eef2e7,#dde3d2);display:flex;align-items:center;justify-content:center;}
+.access .map .cap{text-align:center;color:rgba(90,90,70,.5);}
+.access .map .cap b{font-family:"Jost",sans-serif;letter-spacing:.26em;font-size:11px;display:block;}
+.access .map .cap small{font-size:11px;font-weight:300;}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 60px;max-width:680px;margin:0 auto;}
+.info-grid .row{display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #dfe6d6;padding:14px 4px;}
+.info-grid .row dt{font-family:"Jost",sans-serif;letter-spacing:.22em;font-size:10.5px;color:var(--sage-deep);}
+.info-grid .row dd{margin:0;font-size:15px;color:var(--ink);font-weight:400;letter-spacing:.04em;}
+.info-grid .row dd small{display:block;font-size:12px;color:var(--muted);font-weight:300;margin-top:2px;}
+.access .cta{text-align:center;margin-top:44px;}
+.access .cta a{display:inline-block;font-family:"Jost",sans-serif;letter-spacing:.18em;font-size:13px;
+  border:1px solid var(--ink);color:var(--ink);padding:14px 38px;border-radius:2px;transition:.22s;}
+.access .cta a:hover{background:var(--ink);color:#fff;}
+
+/* ===================== FOOTER ===================== */
+footer{background:var(--sec-cream);padding-top:60px;padding-bottom:46px;text-align:center;}
+footer .mark{width:44px;height:44px;border-radius:50%;margin:0 auto 16px;
+  background:radial-gradient(circle at 38% 34%,#c66076,var(--berry) 55%,var(--berry-deep));}
+footer .lt{font-family:"Jost",sans-serif;letter-spacing:.3em;font-size:14px;color:var(--berry);}
+footer .lt small{display:block;font-size:11px;color:var(--muted);letter-spacing:.18em;margin-top:6px;}
+footer .social{display:flex;gap:20px;justify-content:center;margin:24px 0 22px;}
+footer .social a{width:20px;height:20px;color:var(--muted);transition:.2s;}
+footer .social a:hover{color:var(--berry);}
+footer .fnav{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-family:"Jost",sans-serif;
+  letter-spacing:.16em;font-size:11.5px;color:var(--muted);margin-bottom:22px;}
+footer .fnav a:hover{color:var(--berry);}
+footer .copy{font-family:"Jost",sans-serif;letter-spacing:.14em;font-size:10.5px;color:#b6ad9f;}
+
+/* ---- スクロールで現れる演出 ---- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:none;}
+
+/* ---- レスポンシブ ---- */
+@media(max-width:760px){
+  .variety-grid{grid-template-columns:1fr;max-width:360px;}
+  .flow img{height:230px;width:310px;}
+}
+@media(max-width:560px){
+  .stage{flex-direction:column;gap:24px;}
+  .portrait{height:320px;}
+  .tate{height:180px;}
+  .info-grid{grid-template-columns:1fr;}
+}
+
+/* ---- アニメーションを控えたい設定の人向け ---- */
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .scroll-cue .ln::after{animation:none;}
+}
