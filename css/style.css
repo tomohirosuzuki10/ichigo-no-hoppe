@@ -125,6 +125,7 @@ section,header,footer{padding-left:24px;padding-right:24px;}
   font-size:clamp(28px,4vw,46px);letter-spacing:.14em;margin:0;color:var(--ink);}
 .ev-label{writing-mode:vertical-rl;font-family:"Jost",sans-serif;
   letter-spacing:.32em;font-size:10px;color:var(--berry);}
+.note{text-align: center;}
 @media(max-width:760px){
   .ev-block{grid-template-columns:1fr;gap:28px;margin-bottom:50px;}
   .ev-rev .ev-photo,.ev-rev .ev-content{order:unset;}
@@ -185,11 +186,17 @@ footer .copy{font-family:"Jost",sans-serif;letter-spacing:.14em;font-size:10.5px
 @media(max-width:760px){
   .variety-grid{grid-template-columns:1fr;max-width:360px;}
   .flow img{height:230px;width:310px;}
-}
-@media(max-width:560px){
-  .stage{flex-direction:column;gap:24px;}
   .portrait{height:320px;}
-  .tate{height:180px;}
+  .tate {
+    flex-direction: column; /* ここで縦並びにする */
+    height: auto;           /* 固定の高さを解除 */
+    gap: 20px;              /* 縦並びの時の隙間 */
+  }
+  .lead {
+    word-break: keep-all; /* 単語の途中で改行しない */
+    text-align: center;   /* 中央寄せで整える */
+    line-height: 1.5;     /* 行間を広げて読みやすく */
+    }
   .info-grid{grid-template-columns:1fr;}
 }
 
