@@ -3,205 +3,843 @@
    中央シンメトリー / 白基調・セクションごとに淡色を交互
    ======================================================= */
 
-:root{
-  --ink:#3a3631;
-  --muted:#8c857a;
-  --berry:#b14a5e;
-  --berry-deep:#8f3a4b;
-  --sage:#8c9a7c;
-  --sage-deep:#5f6f50;
-  --line:#e6e0d4;
+/* ---- CSS変数（色・背景色の一覧） ---- */
+:root {
+  --ink:        #3a3631;   /* メインのテキスト色（こげ茶） */
+  --muted:      #8c857a;   /* サブテキスト・薄い説明文の色 */
+  --berry:      #b14a5e;   /* いちご色（アクセントカラー） */
+  --berry-deep: #8f3a4b;   /* いちご色の濃いバージョン */
+  --sage:       #8c9a7c;   /* セージグリーン */
+  --sage-deep:  #5f6f50;   /* セージグリーンの濃いバージョン */
+  --line:       #e6e0d4;   /* 区切り線・ボーダーの色 */
   /* セクション背景：白を基調に淡い色を交互に */
-  --sec-cream:#f6f3eb;
-  --sec-white:#ffffff;
-  --sec-rose:#fbf3f3;
-  --sec-sage:#eef3ea;
+  --sec-cream: #f6f3eb;    /* クリーム色の背景 */
+  --sec-white: #ffffff;    /* 白の背景 */
+  --sec-rose:  #fbf3f3;    /* 淡いピンクの背景 */
+  --sec-sage:  #eef3ea;    /* 淡いグリーンの背景 */
 }
 
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  margin:0;color:var(--ink);background:var(--sec-white);
-  font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;
-  -webkit-font-smoothing:antialiased;line-height:1.8;
+/* ---- 全要素の共通設定 ---- */
+* {
+  box-sizing: border-box; /* paddingやborderを幅に含める */
 }
-a{color:inherit;text-decoration:none;}
-img{display:block;max-width:100%;}
-section,header,footer{padding-left:24px;padding-right:24px;}
-.wrap{max-width:1000px;margin:0 auto;}
+
+html {
+  scroll-behavior: smooth; /* アンカーリンクでなめらかにスクロール */
+}
+
+body {
+  margin: 0;                                          /* デフォルトの余白をリセット */
+  color: var(--ink);                                  /* 全体のテキスト色 */
+  background: var(--sec-white);                       /* ページ背景色 */
+  font-family: "Zen Kaku Gothic New", sans-serif;     /* 基本フォント */
+  font-weight: 400;                                   /* 標準の太さ */
+  -webkit-font-smoothing: antialiased;                /* フォントのアンチエイリアス（滑らかに） */
+  line-height: 1.8;                                   /* 行の高さ */
+}
+
+a {
+  color: inherit;           /* 親要素の文字色を引き継ぐ */
+  text-decoration: none;    /* 下線を消す */
+}
+
+img {
+  display: block;     /* 画像の下に余分な隙間が出ないようにする */
+  max-width: 100%;    /* 親要素からはみ出さないようにする */
+}
+
+section, header, footer {
+  padding-left: 24px;   /* 左右の内側余白 */
+  padding-right: 24px;
+}
+
+.wrap {
+  max-width: 1000px;  /* コンテンツの最大幅 */
+  margin: 0 auto;     /* 左右中央揃え */
+}
 
 /* ---- 共通の見出し（中央シンメトリーの目印） ---- */
-.sec-head{text-align:center;margin:0 auto 46px;}
-.sec-head .eyebrow{font-family:"Jost",sans-serif;letter-spacing:.42em;font-size:11.5px;color:var(--berry);}
-.sec-head h2{font-family:"Shippori Mincho",serif;font-weight:500;letter-spacing:.12em;
-  font-size:clamp(24px,3.6vw,34px);margin:16px 0 18px;}
-.sec-head .divider{display:inline-flex;align-items:center;gap:14px;justify-content:center;}
-.sec-head .divider i{width:46px;height:1px;background:var(--line);display:block;}
-.sec-head .divider svg{width:16px;height:20px;}
+.sec-head {
+  text-align: center;   /* 中央揃え */
+  margin: 0 auto 46px;  /* 下に余白 */
+}
 
-/* ===================== HERO ===================== */
-.hero{position:relative;overflow:hidden;background:#1a1210;padding-top:40px;padding-bottom:48px;}
-.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.42);z-index:1;pointer-events:none;}
-.hero-inner{position:relative;z-index:2;}
-.hero-bg{position:absolute;inset:0;z-index:0;}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;}
-.hero-slide.active{opacity:1;}
-.hero .brandc .lt{color:#fff;}
-.hero .brandc .lt small{color:rgba(255,255,255,0.72);}
-.hero .tate .l1{color:#fff;}
-.hero .tate .l2{color:rgba(255,255,255,0.72);}
-.hero .nav-row{color:rgba(255,255,255,0.75);}
-.hero .nav-row a:hover{color:#fff;}
-.hero .nav-row a::after{background:#fff;}
-.hero .scroll-cue{color:rgba(255,255,255,0.6);}
-.hero .scroll-cue .ln{background:rgba(255,255,255,0.25);}
-.hero-inner{max-width:1000px;margin:0 auto;text-align:center;}
-.brandc{display:inline-flex;flex-direction:column;align-items:center;gap:12px;}
-.brandc .mark{width:54px;height:54px;border-radius:50%;
-  background:radial-gradient(circle at 38% 34%,#c66076,var(--berry) 55%,var(--berry-deep));}
-.brandc .lt{font-family:"Jost",sans-serif;font-weight:500;letter-spacing:.34em;font-size:17px;color:var(--berry);}
-.brandc .lt small{display:block;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;
-  letter-spacing:.22em;font-size:11.5px;color:var(--muted);margin-top:8px;}
-.stage{display:flex;align-items:center;justify-content:center;gap:30px;margin:42px 0 4px;}
-.portrait{width:340px;max-width:64vw;height:400px;border-radius:2px;overflow:hidden;}
-.portrait img{width:100%;height:100%;object-fit:cover;}
-.tate{display:flex;flex-direction:row-reverse;gap:.55em;writing-mode:vertical-rl;height:350px;}
-.tate .l1{font-family:"Shippori Mincho",serif;font-weight:500;letter-spacing:.34em;font-size:20px;color:var(--ink);}
-.tate .l2{font-family:"Shippori Mincho",serif;font-weight:400;letter-spacing:.3em;font-size:14px;color:var(--muted);}
-.nav-row{margin-top:38px;display:flex;gap:34px;justify-content:center;flex-wrap:wrap;
-  font-family:"Jost",sans-serif;letter-spacing:.2em;font-size:12.5px;color:var(--muted);}
-.nav-row a{position:relative;padding-bottom:4px;transition:.2s;}
-.nav-row a::after{content:"";position:absolute;left:50%;right:50%;bottom:0;height:1px;background:var(--berry);transition:.25s;}
-.nav-row a:hover{color:var(--berry);}
-.nav-row a:hover::after{left:0;right:0;}
-.scroll-cue{margin-top:40px;font-family:"Jost",sans-serif;letter-spacing:.3em;font-size:10px;color:var(--muted);}
-.scroll-cue .ln{display:block;width:1px;height:34px;margin:10px auto 0;background:var(--line);position:relative;overflow:hidden;}
-.scroll-cue .ln::after{content:"";position:absolute;top:-34px;left:0;width:1px;height:34px;background:var(--berry);animation:drop 2.4s ease-in-out infinite;}
-@keyframes drop{0%{top:-34px;}60%,100%{top:34px;}}
+.sec-head .eyebrow {
+  font-family: "Jost", sans-serif;  /* 英語見出し用フォント */
+  letter-spacing: .42em;            /* 文字間隔を広めに */
+  font-size: 11.5px;                /* 小さめのサイズ */
+  color: var(--berry);              /* いちご色 */
+}
+
+.sec-head h2 {
+  font-family: "Shippori Mincho", serif;        /* 明朝体フォント */
+  font-weight: 500;                             /* やや太め */
+  letter-spacing: .12em;                        /* 文字間隔 */
+  font-size: clamp(24px, 3.6vw, 34px);         /* 画面サイズに応じて変化 */
+  margin: 16px 0 18px;                          /* 上下の余白 */
+}
+
+.sec-head .divider {
+  display: inline-flex;       /* 横並びの flex */
+  align-items: center;        /* 縦方向中央揃え */
+  gap: 14px;                  /* アイテム間の隙間 */
+  justify-content: center;    /* 横方向中央揃え */
+}
+
+.sec-head .divider i {
+  width: 46px;              /* 線の横幅 */
+  height: 1px;              /* 線の太さ */
+  background: var(--line);  /* 線の色 */
+  display: block;           /* ブロック要素にして幅・高さを効かせる */
+}
+
+.sec-head .divider svg {
+  width: 16px;    /* いちごアイコンの幅 */
+  height: 20px;   /* いちごアイコンの高さ */
+}
+
+/* ===================== HERO（表紙） ===================== */
+.hero {
+  position: relative;     /* 子要素の absoluteの基準にする */
+  overflow: hidden;       /* はみ出た背景スライドを隠す */
+  background: #1a1210;    /* 画像読み込み前の暗い背景色 */
+  padding-top: 40px;      /* 上の内側余白 */
+  padding-bottom: 48px;   /* 下の内側余白 */
+}
+
+.hero::after {
+  content: '';                      /* 疑似要素に必要な空文字 */
+  position: absolute;               /* .heroの上に重ねる */
+  inset: 0;                         /* 上下左右すべて0（全面を覆う） */
+  background: rgba(0, 0, 0, 0.42); /* 半透明の黒オーバーレイ */
+  z-index: 1;                       /* 背景写真の上、テキストの下 */
+  pointer-events: none;             /* クリックを通過させる */
+}
+
+.hero-inner {
+  position: relative;     /* z-indexを効かせるために必要 */
+  z-index: 2;             /* オーバーレイより手前に表示 */
+  max-width: 1000px;      /* 内容の最大幅 */
+  margin: 0 auto;         /* 左右中央揃え */
+  text-align: center;     /* 中央揃え */
+}
+
+.hero-bg {
+  position: absolute;   /* .heroの全面に広げる */
+  inset: 0;             /* 上下左右すべて0 */
+  z-index: 0;           /* 一番後ろ */
+}
+
+.hero-slide {
+  position: absolute;           /* .hero-bgの全面に広げる */
+  inset: 0;                     /* 上下左右すべて0 */
+  background-size: cover;       /* 画像をトリミングして全面に表示 */
+  background-position: center;  /* 画像を中央基準でトリミング */
+  opacity: 0;                   /* 初期状態は非表示 */
+  transition: opacity 1.2s ease; /* 表示・非表示をフェードで切り替え */
+}
+
+.hero-slide.active {
+  opacity: 1; /* JSでこのクラスが付いたスライドを表示 */
+}
+
+/* hero内のテキストを白系に上書き */
+.hero .brandc .lt              { color: #fff; }                    /* ブランド名を白に */
+.hero .brandc .lt small        { color: rgba(255, 255, 255, 0.72); } /* サブテキストを半透明の白に */
+.hero .tate .l1                { color: #fff; }                    /* 縦書きメインテキストを白に */
+.hero .tate .l2                { color: rgba(255, 255, 255, 0.72); } /* 縦書きサブテキストを半透明の白に */
+.hero .nav-row                 { color: rgba(255, 255, 255, 0.75); } /* ナビゲーションを半透明の白に */
+.hero .nav-row a:hover         { color: #fff; }                    /* ホバー時は完全な白に */
+.hero .nav-row a::after        { background: #fff; }               /* ホバー下線を白に */
+.hero .scroll-cue              { color: rgba(255, 255, 255, 0.6);  } /* スクロールキューを半透明の白に */
+.hero .scroll-cue .ln          { background: rgba(255, 255, 255, 0.25); } /* スクロール線を半透明の白に */
+
+.brandc {
+  display: inline-flex;       /* 横並びのflexにして幅を中身に合わせる */
+  flex-direction: column;     /* 縦並びに変更 */
+  align-items: center;        /* 中央揃え */
+  gap: 12px;                  /* アイテム間の隙間 */
+}
+
+.brandc .mark {
+  width: 54px;          /* 丸いマークの幅 */
+  height: 54px;         /* 丸いマークの高さ */
+  border-radius: 50%;   /* 円形にする */
+  background: radial-gradient(circle at 38% 34%, #c66076, var(--berry) 55%, var(--berry-deep)); /* いちご色のグラデーション */
+}
+
+.brandc .lt {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  font-weight: 500;                  /* やや太め */
+  letter-spacing: .34em;             /* 文字間隔を広めに */
+  font-size: 17px;                   /* 文字サイズ */
+  color: var(--berry);               /* いちご色 */
+}
+
+.brandc .lt small {
+  display: block;                             /* 改行させる */
+  font-family: "Zen Kaku Gothic New", sans-serif; /* 日本語フォント */
+  font-weight: 400;                           /* 標準の太さ */
+  letter-spacing: .22em;                      /* 文字間隔 */
+  font-size: 11.5px;                          /* 小さめの文字サイズ */
+  color: var(--muted);                        /* サブカラー */
+  margin-top: 8px;                            /* 上の余白 */
+}
+
+.stage {
+  display: flex;          /* 横並び */
+  align-items: center;    /* 縦方向中央揃え */
+  justify-content: center; /* 横方向中央揃え */
+  gap: 30px;              /* アイテム間の隙間 */
+  margin: 42px 0 4px;     /* 上下の余白 */
+}
+
+.portrait {
+  width: 340px;       /* 写真の横幅 */
+  max-width: 64vw;    /* 画面幅の64%以上にはならないように制限 */
+  height: 400px;      /* 写真の高さ */
+  border-radius: 2px; /* 角を少し丸める */
+  overflow: hidden;   /* 角丸からはみ出た画像を隠す */
+}
+
+.portrait img {
+  width: 100%;          /* 親要素いっぱいに広げる */
+  height: 100%;         /* 親要素いっぱいに広げる */
+  object-fit: cover;    /* トリミングしてフィットさせる */
+}
+
+.tate {
+  display: flex;              /* 横並び（縦書きなので実際は縦方向） */
+  flex-direction: row-reverse; /* 右から左の順番に並べる */
+  gap: .55em;                  /* テキスト間の隙間 */
+  writing-mode: vertical-rl;   /* 縦書きにする */
+  height: 350px;               /* 縦書きブロックの高さ */
+}
+
+.tate .l1 {
+  font-family: "Shippori Mincho", serif; /* 明朝体フォント */
+  font-weight: 500;                       /* やや太め */
+  letter-spacing: .34em;                  /* 文字間隔 */
+  font-size: 20px;                        /* 文字サイズ */
+  color: var(--ink);                      /* メインテキスト色 */
+}
+
+.tate .l2 {
+  font-family: "Shippori Mincho", serif; /* 明朝体フォント */
+  font-weight: 400;                       /* 標準の太さ */
+  letter-spacing: .3em;                   /* 文字間隔 */
+  font-size: 14px;                        /* 小さめの文字サイズ */
+  color: var(--muted);                    /* サブカラー */
+}
+
+.nav-row {
+  margin-top: 38px;           /* 上の余白 */
+  display: flex;              /* 横並び */
+  gap: 34px;                  /* アイテム間の隙間 */
+  justify-content: center;    /* 中央揃え */
+  flex-wrap: wrap;            /* 画面が狭い時は折り返す */
+  font-family: "Jost", sans-serif; /* 英語フォント */
+  letter-spacing: .2em;       /* 文字間隔 */
+  font-size: 12.5px;          /* 文字サイズ */
+  color: var(--muted);        /* テキスト色 */
+}
+
+.nav-row a {
+  position: relative;     /* ::afterの基準にする */
+  padding-bottom: 4px;    /* 下線のスペース確保 */
+  transition: .2s;        /* ホバー時の色変化をなめらかに */
+}
+
+.nav-row a::after {
+  content: "";              /* 疑似要素に必要な空文字 */
+  position: absolute;       /* リンクに重ねる */
+  left: 50%;                /* 初期状態は中央から（幅0） */
+  right: 50%;               /* 初期状態は中央から（幅0） */
+  bottom: 0;                /* テキストの下に配置 */
+  height: 1px;              /* 線の太さ */
+  background: var(--berry); /* 線の色 */
+  transition: .25s;         /* 広がるアニメーション */
+}
+
+.nav-row a:hover { color: var(--berry); } /* ホバー時にいちご色に */
+
+.nav-row a:hover::after {
+  left: 0;    /* ホバー時に左端まで広がる */
+  right: 0;   /* ホバー時に右端まで広がる */
+}
+
+.scroll-cue {
+  margin-top: 40px;                   /* 上の余白 */
+  font-family: "Jost", sans-serif;    /* 英語フォント */
+  letter-spacing: .3em;               /* 文字間隔 */
+  font-size: 10px;                    /* 小さめの文字サイズ */
+  color: var(--muted);                /* サブカラー */
+}
+
+.scroll-cue .ln {
+  display: block;           /* ブロック要素にする */
+  width: 1px;               /* 線の幅 */
+  height: 34px;             /* 線の高さ */
+  margin: 10px auto 0;      /* 上の余白・左右中央 */
+  background: var(--line);  /* 線の色 */
+  position: relative;       /* ::afterの基準にする */
+  overflow: hidden;         /* アニメーションのはみ出しを隠す */
+}
+
+.scroll-cue .ln::after {
+  content: "";              /* 疑似要素に必要な空文字 */
+  position: absolute;       /* 親に重ねて配置 */
+  top: -34px;               /* 初期位置：上に隠れている */
+  left: 0;                  /* 左端に配置 */
+  width: 1px;               /* 線の幅 */
+  height: 34px;             /* 線の高さ */
+  background: var(--berry); /* 線の色（いちご色） */
+  animation: drop 2.4s ease-in-out infinite; /* 流れ落ちるアニメーション */
+}
+
+@keyframes drop {
+  0%        { top: -34px; } /* 上に隠れた状態からスタート */
+  60%, 100% { top:  34px; } /* 下まで流れ落ちる */
+}
 
 /* ===================== ABOUT（農園の紹介） ===================== */
-.about{background:var(--sec-white);padding-top:84px;padding-bottom:84px;}
-.about .lead{max-width:660px;margin:0 auto;text-align:center;font-family:"Shippori Mincho",serif;
-  font-size:16px;line-height:2.5;color:#534c43;}
-.about .lead em{color:var(--berry);font-style:normal;}
+.about {
+  background: var(--sec-white); /* 白い背景 */
+  padding-top: 84px;            /* 上の内側余白 */
+  padding-bottom: 84px;         /* 下の内側余白 */
+}
+
+.about .lead {
+  max-width: 660px;                         /* 読みやすい最大幅 */
+  margin: 0 auto;                           /* 左右中央揃え */
+  text-align: center;                       /* テキスト中央揃え */
+  font-family: "Shippori Mincho", serif;    /* 明朝体フォント */
+  font-size: 16px;                          /* 文字サイズ */
+  line-height: 2.5;                         /* 行の高さ（ゆったり） */
+  color: #534c43;                           /* やや暗めのテキスト色 */
+}
+.sp {
+  display: none; /* スマホの改行用スペースを消す */
+}
+
+.about .lead em {
+  color: var(--berry);  /* 強調テキストをいちご色に */
+  font-style: normal;   /* イタリックを解除 */
+}
 
 /* 流れてくる写真（マーキー） */
-.flow{margin:54px 0 0;padding:20px 0;overflow:hidden;
-  -webkit-mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
-  mask:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
-.flow-track{display:flex;gap:64px;width:max-content;animation:flow 70s linear infinite;}
-.flow:hover .flow-track{animation-play-state:paused;}
-.flow img{height:300px;width:400px;min-width:400px;object-fit:cover;border-radius:2px;flex-shrink:0;}
-@keyframes flow{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+.flow {
+  margin: 54px 0 0;     /* 上の余白 */
+  padding: 20px 0;      /* 上下の内側余白（写真の上下のスペース） */
+  overflow: hidden;     /* はみ出た画像を隠す */
+  /* 左右をフェードアウトさせるマスク */
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask:         linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
 
-.features{display:flex;justify-content:center;gap:54px;margin:64px auto 0;flex-wrap:wrap;text-align:center;}
-.features .f{max-width:200px;}
-.features .f .ic{width:42px;height:42px;margin:0 auto 14px;color:var(--sage-deep);}
-.features .f h3{font-family:"Shippori Mincho",serif;font-weight:500;font-size:16px;letter-spacing:.06em;margin:0 0 8px;}
-.features .f p{font-size:13px;color:var(--muted);line-height:1.9;font-weight:300;margin:0;}
+.flow-track {
+  display: flex;                          /* 横並び */
+  gap: 64px;                              /* 写真と写真の間の隙間 */
+  width: max-content;                     /* 中身に合わせた幅（全写真が横一列に収まる幅） */
+  animation: flow 70s linear infinite;   /* 左から流れ続けるアニメーション */
+}
+
+.flow:hover .flow-track {
+  animation-play-state: paused; /* ホバー中はアニメーションを一時停止 */
+}
+
+.flow img {
+  height: 300px;        /* 写真の高さ */
+  width: 400px;         /* 写真の幅 */
+  min-width: 400px;     /* flexboxで縮まないよう最小幅を固定 */
+  object-fit: cover;    /* トリミングしてサイズに合わせる */
+  border-radius: 2px;   /* 角を少し丸める */
+  flex-shrink: 0;       /* flexboxで縮まないようにする */
+}
+
+@keyframes flow {
+  from { transform: translateX(-50%); } /* 左にずれた状態からスタート（左から流れてくる） */
+  to   { transform: translateX(0); }    /* 元の位置まで移動してループ */
+}
+
+.features {
+  display: flex;          /* 横並び */
+  justify-content: center; /* 中央揃え */
+  gap: 54px;              /* アイテム間の隙間 */
+  margin: 64px auto 0;    /* 上の余白・左右中央 */
+  flex-wrap: wrap;        /* 画面が狭い時は折り返す */
+  text-align: center;     /* テキスト中央揃え */
+}
+
+.features .f {
+  max-width: 200px; /* 各特徴ブロックの最大幅 */
+}
+
+.features .f .ic {
+  width: 42px;              /* アイコンの幅 */
+  height: 42px;             /* アイコンの高さ */
+  margin: 0 auto 14px;      /* 下の余白・左右中央 */
+  color: var(--sage-deep);  /* アイコンの色（濃いグリーン） */
+}
+
+.features .f h3 {
+  font-family: "Shippori Mincho", serif;  /* 明朝体フォント */
+  font-weight: 500;                        /* やや太め */
+  font-size: 16px;                         /* 文字サイズ */
+  letter-spacing: .06em;                   /* 文字間隔 */
+  margin: 0 0 8px;                         /* 下の余白 */
+}
+
+.features .f p {
+  font-size: 13px;        /* 小さめの文字サイズ */
+  color: var(--muted);    /* サブカラー */
+  line-height: 1.9;       /* 行の高さ */
+  font-weight: 300;       /* 細め */
+  margin: 0;              /* 余白リセット */
+}
 
 /* ===================== EVENT（いちご狩り・スムージー販売） ===================== */
-.event{background:var(--sec-cream);padding-top:84px;padding-bottom:84px;}
-.event-meta{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
-  border:1px solid var(--line);border-radius:3px;padding:28px 40px;
-  max-width:580px;margin:0 auto 70px;}
-.event-meta .em{text-align:center;}
-.event-meta .em-label{display:block;font-family:"Jost",sans-serif;letter-spacing:.22em;
-  font-size:10.5px;color:var(--berry);margin-bottom:8px;}
-.event-meta .em-val{font-family:"Shippori Mincho",serif;font-size:20px;font-weight:500;
-  color:var(--ink);letter-spacing:.08em;}
-.ev-block{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;
-  max-width:1000px;margin:0 auto 70px;padding:0 24px;}
-.ev-rev .ev-photo{order:2;}
-.ev-rev .ev-content{order:1;flex-direction:row-reverse;}
-.ev-photo{height:460px;overflow:hidden;border-radius:2px;}
-.ev-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
-.ev-block:hover .ev-photo img{transform:scale(1.04);}
-.ev-content{display:flex;align-items:center;gap:28px;}
-.ev-desc{flex:1;font-family:"Shippori Mincho",serif;font-size:15px;
-  line-height:2.5;color:#534c43;font-weight:400;}
-.ev-title{display:flex;flex-direction:column-reverse;align-items:center;gap:14px;}
-.ev-title h3{writing-mode:vertical-rl;font-family:"Shippori Mincho",serif;font-weight:500;
-  font-size:clamp(28px,4vw,46px);letter-spacing:.14em;margin:0;color:var(--ink);}
-.ev-label{writing-mode:vertical-rl;font-family:"Jost",sans-serif;
-  letter-spacing:.32em;font-size:10px;color:var(--berry);}
-.note{text-align: center;}
-@media(max-width:760px){
-  .ev-block{grid-template-columns:1fr;gap:28px;margin-bottom:50px;}
-  .ev-rev .ev-photo,.ev-rev .ev-content{order:unset;}
-  .ev-rev .ev-content{flex-direction:row;}
+.event {
+  background: var(--sec-cream); /* クリーム色の背景 */
+  padding-top: 84px;            /* 上の内側余白 */
+  padding-bottom: 84px;         /* 下の内側余白 */
+}
+.event .lead .br-sp {
+  display: none; /*なくす */
+}
+
+.event-meta {
+  display: flex;              /* 横並び */
+  justify-content: center;    /* 中央揃え */
+  gap: 48px;                  /* アイテム間の隙間 */
+  flex-wrap: wrap;            /* 画面が狭い時は折り返す */
+  border: 1px solid var(--line); /* ボーダー線 */
+  border-radius: 3px;         /* 角を少し丸める */
+  padding: 28px 40px;         /* 内側余白 */
+  max-width: 580px;           /* 最大幅 */
+  margin: 0 auto 70px;        /* 下の余白・左右中央 */
+}
+
+.event-meta .em {
+  text-align: center; /* 中央揃え */
+}
+
+.event-meta .em-label {
+  display: block;                         /* 改行させる */
+  font-family: "Jost", sans-serif;        /* 英語フォント */
+  letter-spacing: .22em;                  /* 文字間隔 */
+  font-size: 10.5px;                      /* 小さめの文字サイズ */
+  color: var(--berry);                    /* いちご色 */
+  margin-bottom: 8px;                     /* 下の余白 */
+}
+
+.event-meta .em-val {
+  font-family: "Shippori Mincho", serif;  /* 明朝体フォント */
+  font-size: 20px;                         /* 文字サイズ */
+  font-weight: 500;                        /* やや太め */
+  color: var(--ink);                       /* メインテキスト色 */
+  letter-spacing: .08em;                   /* 文字間隔 */
+}
+
+.ev-block {
+  display: grid;                    /* グリッドレイアウト */
+  grid-template-columns: 1fr 1fr;   /* 左右2等分 */
+  align-items: center;              /* 縦方向中央揃え */
+  gap: 60px;                        /* 写真とテキストの間の隙間 */
+  max-width: 1000px;                /* 最大幅 */
+  margin: 0 auto 70px;             /* 下の余白・左右中央 */
+  padding: 0 24px;                  /* 左右の内側余白 */
+}
+
+.ev-rev .ev-photo   { order: 2; }  /* 写真を右側に移動（2番目に） */
+.ev-rev .ev-content {
+  order: 1;                   /* テキストを左側に移動（1番目に） */
+  flex-direction: row-reverse; /* 縦書きタイトルと説明文の並びを逆に */
+}
+
+.ev-photo {
+  height: 460px;      /* 写真の高さ */
+  overflow: hidden;   /* 角丸からはみ出た画像を隠す */
+  border-radius: 2px; /* 角を少し丸める */
+}
+
+.ev-photo img {
+  width: 100%;                    /* 親要素いっぱいに広げる */
+  height: 100%;                   /* 親要素いっぱいに広げる */
+  object-fit: cover;              /* トリミングしてフィットさせる */
+  transition: transform .6s ease; /* ホバー時のズームをなめらかに */
+}
+
+.ev-block:hover .ev-photo img {
+  transform: scale(1.04); /* ホバー時に少しズームイン */
+}
+
+.ev-content {
+  display: flex;        /* 横並び（説明文 + 縦書きタイトル） */
+  align-items: center;  /* 縦方向中央揃え */
+  gap: 28px;            /* 説明文とタイトルの間の隙間 */
+}
+
+.ev-desc {
+  flex: 1;                                    /* 余ったスペースをすべて使う */
+  font-family: "Shippori Mincho", serif;      /* 明朝体フォント */
+  font-size: 15px;                            /* 文字サイズ */
+  line-height: 2.5;                           /* 行の高さ（ゆったり） */
+  color: #534c43;                             /* テキスト色 */
+  font-weight: 400;                           /* 標準の太さ */
+  word-break: break-word;                     /* 長い単語も折り返す */
+  overflow-wrap: break-word;                  /* はみ出さないよう折り返す */
+}
+
+.ev-title {
+  display: flex;              /* 縦書きタイトルと英語ラベルを並べる */
+  flex-direction: column-reverse; /* 英語ラベルを下、タイトルを上に */
+  align-items: center;        /* 中央揃え */
+  gap: 14px;                  /* アイテム間の隙間 */
+}
+
+.ev-title h3 {
+  writing-mode: vertical-rl;                    /* 縦書きにする */
+  font-family: "Shippori Mincho", serif;        /* 明朝体フォント */
+  font-weight: 500;                             /* やや太め */
+  font-size: clamp(28px, 4vw, 46px);           /* 画面サイズに応じて変化 */
+  letter-spacing: .14em;                        /* 文字間隔 */
+  margin: 0;                                    /* 余白リセット */
+  color: var(--ink);                            /* メインテキスト色 */
+}
+
+.ev-label {
+  writing-mode: vertical-rl;           /* 縦書きにする */
+  font-family: "Jost", sans-serif;     /* 英語フォント */
+  letter-spacing: .32em;               /* 文字間隔を広めに */
+  font-size: 10px;                     /* 小さめの文字サイズ */
+  color: var(--berry);                 /* いちご色 */
 }
 
 /* ===================== STRAWBERRY（イチゴの紹介） ===================== */
-.berries{background:var(--sec-rose);padding-top:84px;padding-bottom:84px;}
-.variety-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:920px;margin:0 auto;}
-.v-card{background:#fff;border:1px solid #f0e3e3;border-radius:3px;overflow:hidden;text-align:center;
-  transition:transform .25s,box-shadow .25s;}
-.v-card:hover{transform:translateY(-5px);box-shadow:0 22px 40px -26px rgba(140,60,75,.45);}
-.v-card .thumb{height:200px;overflow:hidden;}
-.v-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
-.v-card:hover .thumb img{transform:scale(1.06);}
-.v-card .body{padding:22px 20px 26px;}
-.v-card .jp{font-family:"Shippori Mincho",serif;font-weight:600;font-size:19px;letter-spacing:.08em;color:var(--ink);}
-.v-card .en{font-family:"Jost",sans-serif;letter-spacing:.24em;font-size:10.5px;color:var(--berry);margin-top:5px;}
-.v-card p{font-size:13px;color:#6a6258;line-height:1.95;margin:14px 0 0;font-weight:300;}
-.berries .note{text-align:center;margin:42px auto 0;font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em;}
+.berries {
+  background: var(--sec-rose);  /* 淡いピンクの背景 */
+  padding-top: 84px;            /* 上の内側余白 */
+  padding-bottom: 84px;         /* 下の内側余白 */
+}
+
+.variety-grid {
+  display: grid;                          /* グリッドレイアウト */
+  grid-template-columns: repeat(3, 1fr);  /* 3等分 */
+  gap: 26px;                              /* カード間の隙間 */
+  max-width: 920px;                       /* 最大幅 */
+  margin: 0 auto;                         /* 左右中央揃え */
+}
+
+.v-card {
+  background: #fff;                           /* カードの背景色（白） */
+  border: 1px solid #f0e3e3;                  /* 薄いピンクのボーダー */
+  border-radius: 3px;                         /* 角を少し丸める */
+  overflow: hidden;                           /* 角丸からはみ出た画像を隠す */
+  text-align: center;                         /* テキスト中央揃え */
+  transition: transform .25s, box-shadow .25s; /* ホバー時の動きをなめらかに */
+}
+
+.v-card:hover {
+  transform: translateY(-5px);                          /* ホバー時に少し浮き上がる */
+  box-shadow: 0 22px 40px -26px rgba(140, 60, 75, .45); /* ホバー時に影をつける */
+}
+
+.v-card .thumb {
+  height: 200px;    /* サムネイル画像の高さ */
+  overflow: hidden; /* はみ出た画像を隠す */
+}
+
+.v-card .thumb img {
+  width: 100%;                      /* 親要素いっぱいに広げる */
+  height: 100%;                     /* 親要素いっぱいに広げる */
+  object-fit: cover;                /* トリミングしてフィットさせる */
+  transition: transform .5s ease;   /* ホバー時のズームをなめらかに */
+}
+
+.v-card:hover .thumb img {
+  transform: scale(1.06); /* ホバー時に少しズームイン */
+}
+
+.v-card .body {
+  padding: 22px 20px 26px; /* カード内の余白 */
+}
+
+.v-card .jp {
+  font-family: "Shippori Mincho", serif;  /* 明朝体フォント */
+  font-weight: 600;                        /* 太め */
+  font-size: 19px;                         /* 文字サイズ */
+  letter-spacing: .08em;                   /* 文字間隔 */
+  color: var(--ink);                       /* メインテキスト色 */
+}
+
+.v-card .en {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  letter-spacing: .24em;            /* 文字間隔を広めに */
+  font-size: 10.5px;                /* 小さめの文字サイズ */
+  color: var(--berry);              /* いちご色 */
+  margin-top: 5px;                  /* 上の余白 */
+}
+
+.v-card p {
+  font-size: 13px;      /* 文字サイズ */
+  color: #6a6258;       /* テキスト色 */
+  line-height: 1.95;    /* 行の高さ */
+  margin: 14px 0 0;     /* 上の余白 */
+  font-weight: 300;     /* 細め */
+}
+
+.berries .note {
+  text-align: center;       /* 中央揃え */
+  margin: 42px auto 0;      /* 上の余白・左右中央 */
+  font-size: 13px;          /* 文字サイズ */
+  color: var(--muted);      /* サブカラー */
+  font-weight: 300;         /* 細め */
+  letter-spacing: .04em;    /* 文字間隔 */
+}
 
 /* ===================== ACCESS（アクセス） ===================== */
-.access{background:var(--sec-sage);padding-top:84px;padding-bottom:84px;}
-.access .map{max-width:880px;height:300px;margin:0 auto 40px;border-radius:3px;border:1px solid #dfe6d6;
-  background:linear-gradient(135deg,#eef2e7,#dde3d2);display:flex;align-items:center;justify-content:center;}
-.access .map .cap{text-align:center;color:rgba(90,90,70,.5);}
-.access .map .cap b{font-family:"Jost",sans-serif;letter-spacing:.26em;font-size:11px;display:block;}
-.access .map .cap small{font-size:11px;font-weight:300;}
-.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 60px;max-width:680px;margin:0 auto;}
-.info-grid .row{display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #dfe6d6;padding:14px 4px;}
-.info-grid .row dt{font-family:"Jost",sans-serif;letter-spacing:.22em;font-size:10.5px;color:var(--sage-deep);}
-.info-grid .row dd{margin:0;font-size:15px;color:var(--ink);font-weight:400;letter-spacing:.04em;}
-.info-grid .row dd small{display:block;font-size:12px;color:var(--muted);font-weight:300;margin-top:2px;}
-.access .cta{text-align:center;margin-top:44px;}
-.access .cta a{display:inline-block;font-family:"Jost",sans-serif;letter-spacing:.18em;font-size:13px;
-  border:1px solid var(--ink);color:var(--ink);padding:14px 38px;border-radius:2px;transition:.22s;}
-.access .cta a:hover{background:var(--ink);color:#fff;}
+.access {
+  background: var(--sec-sage); /* 淡いグリーンの背景 */
+  padding-top: 84px;           /* 上の内側余白 */
+  padding-bottom: 84px;        /* 下の内側余白 */
+}
+
+.access .map {
+  max-width: 880px;                                   /* 最大幅 */
+  height: 300px;                                      /* マップエリアの高さ */
+  margin: 0 auto 40px;                                /* 下の余白・左右中央 */
+  border-radius: 3px;                                 /* 角を少し丸める */
+  border: 1px solid #dfe6d6;                          /* ボーダー線 */
+  background: linear-gradient(135deg, #eef2e7, #dde3d2); /* 仮のグラデーション背景 */
+  display: flex;                                      /* 中の文字を中央揃えにするため */
+  align-items: center;                                /* 縦方向中央揃え */
+  justify-content: center;                            /* 横方向中央揃え */
+}
+
+.access .map .cap {
+  text-align: center;           /* 中央揃え */
+  color: rgba(90, 90, 70, .5);  /* 薄いテキスト色 */
+}
+
+.access .map .cap b {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  letter-spacing: .26em;            /* 文字間隔 */
+  font-size: 11px;                  /* 文字サイズ */
+  display: block;                   /* 改行させる */
+}
+
+.access .map .cap small {
+  font-size: 11px;    /* 小さめの文字サイズ */
+  font-weight: 300;   /* 細め */
+}
+
+.info-grid {
+  display: grid;                          /* グリッドレイアウト */
+  grid-template-columns: repeat(2, 1fr);  /* 2等分 */
+  gap: 14px 60px;                         /* 縦の隙間 横の隙間 */
+  max-width: 680px;                       /* 最大幅 */
+  margin: 0 auto;                         /* 左右中央揃え */
+}
+
+.info-grid .row {
+  display: flex;            /* 縦並び */
+  flex-direction: column;   /* 縦方向に積む */
+  gap: 4px;                 /* ラベルと値の隙間 */
+  border-bottom: 1px solid #dfe6d6; /* 下線 */
+  padding: 14px 4px;        /* 上下の内側余白 */
+}
+
+.info-grid .row dt {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  letter-spacing: .22em;            /* 文字間隔 */
+  font-size: 10.5px;                /* 小さめの文字サイズ */
+  color: var(--sage-deep);          /* 濃いグリーン色 */
+}
+
+.info-grid .row dd {
+  margin: 0;              /* デフォルトの左余白をリセット */
+  font-size: 15px;        /* 文字サイズ */
+  color: var(--ink);      /* メインテキスト色 */
+  font-weight: 400;       /* 標準の太さ */
+  letter-spacing: .04em;  /* 文字間隔 */
+}
+
+.info-grid .row dd small {
+  display: block;         /* 改行させる */
+  font-size: 12px;        /* 小さめの文字サイズ */
+  color: var(--muted);    /* サブカラー */
+  font-weight: 300;       /* 細め */
+  margin-top: 2px;        /* 上の余白 */
+}
+
+.access .cta {
+  text-align: center;   /* 中央揃え */
+  margin-top: 44px;     /* 上の余白 */
+}
+
+.access .cta a {
+  display: inline-block;                  /* 横幅をテキストに合わせる */
+  font-family: "Jost", sans-serif;        /* 英語フォント */
+  letter-spacing: .18em;                  /* 文字間隔 */
+  font-size: 13px;                        /* 文字サイズ */
+  border: 1px solid var(--ink);           /* ボーダー線 */
+  color: var(--ink);                      /* テキスト色 */
+  padding: 14px 38px;                     /* 内側余白 */
+  border-radius: 2px;                     /* 角を少し丸める */
+  transition: .22s;                       /* ホバー時の変化をなめらかに */
+}
+
+.access .cta a:hover {
+  background: var(--ink);  /* ホバー時に背景を塗る */
+  color: #fff;             /* ホバー時にテキストを白に */
+}
 
 /* ===================== FOOTER ===================== */
-footer{background:var(--sec-cream);padding-top:60px;padding-bottom:46px;text-align:center;}
-footer .mark{width:44px;height:44px;border-radius:50%;margin:0 auto 16px;
-  background:radial-gradient(circle at 38% 34%,#c66076,var(--berry) 55%,var(--berry-deep));}
-footer .lt{font-family:"Jost",sans-serif;letter-spacing:.3em;font-size:14px;color:var(--berry);}
-footer .lt small{display:block;font-size:11px;color:var(--muted);letter-spacing:.18em;margin-top:6px;}
-footer .social{display:flex;gap:20px;justify-content:center;margin:24px 0 22px;}
-footer .social a{width:20px;height:20px;color:var(--muted);transition:.2s;}
-footer .social a:hover{color:var(--berry);}
-footer .fnav{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-family:"Jost",sans-serif;
-  letter-spacing:.16em;font-size:11.5px;color:var(--muted);margin-bottom:22px;}
-footer .fnav a:hover{color:var(--berry);}
-footer .copy{font-family:"Jost",sans-serif;letter-spacing:.14em;font-size:10.5px;color:#b6ad9f;}
+footer {
+  background: var(--sec-cream); /* クリーム色の背景 */
+  padding-top: 60px;            /* 上の内側余白 */
+  padding-bottom: 46px;         /* 下の内側余白 */
+  text-align: center;           /* 中央揃え */
+}
+
+footer .mark {
+  width: 44px;      /* マークの幅 */
+  height: 44px;     /* マークの高さ */
+  border-radius: 50%; /* 円形にする */
+  margin: 0 auto 16px; /* 下の余白・左右中央 */
+  background: radial-gradient(circle at 38% 34%, #c66076, var(--berry) 55%, var(--berry-deep)); /* いちご色のグラデーション */
+}
+
+footer .lt {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  letter-spacing: .3em;             /* 文字間隔 */
+  font-size: 14px;                  /* 文字サイズ */
+  color: var(--berry);              /* いちご色 */
+}
+
+footer .lt small {
+  display: block;         /* 改行させる */
+  font-size: 11px;        /* 小さめの文字サイズ */
+  color: var(--muted);    /* サブカラー */
+  letter-spacing: .18em;  /* 文字間隔 */
+  margin-top: 6px;        /* 上の余白 */
+}
+
+footer .social {
+  display: flex;          /* 横並び */
+  gap: 20px;              /* アイコン間の隙間 */
+  justify-content: center; /* 中央揃え */
+  margin: 24px 0 22px;    /* 上下の余白 */
+}
+
+footer .social a {
+  width: 20px;            /* アイコンの幅 */
+  height: 20px;           /* アイコンの高さ */
+  color: var(--muted);    /* アイコンの色 */
+  transition: .2s;        /* ホバー時の変化をなめらかに */
+}
+
+footer .social a:hover {
+  color: var(--berry); /* ホバー時にいちご色に */
+}
+
+footer .fnav {
+  display: flex;                        /* 横並び */
+  gap: 26px;                            /* リンク間の隙間 */
+  justify-content: center;              /* 中央揃え */
+  flex-wrap: wrap;                      /* 画面が狭い時は折り返す */
+  font-family: "Jost", sans-serif;      /* 英語フォント */
+  letter-spacing: .16em;                /* 文字間隔 */
+  font-size: 11.5px;                    /* 文字サイズ */
+  color: var(--muted);                  /* サブカラー */
+  margin-bottom: 22px;                  /* 下の余白 */
+}
+
+footer .fnav a:hover {
+  color: var(--berry); /* ホバー時にいちご色に */
+}
+
+footer .copy {
+  font-family: "Jost", sans-serif;  /* 英語フォント */
+  letter-spacing: .14em;            /* 文字間隔 */
+  font-size: 10.5px;                /* 小さめの文字サイズ */
+  color: #b6ad9f;                   /* 薄いテキスト色 */
+}
 
 /* ---- スクロールで現れる演出 ---- */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.in{opacity:1;transform:none;}
+.reveal {
+  opacity: 0;                                     /* 初期状態は非表示 */
+  transform: translateY(18px);                    /* 初期状態は少し下にずれている */
+  transition: opacity .8s ease, transform .8s ease; /* 現れる動きをなめらかに */
+}
 
-/* ---- レスポンシブ ---- */
-@media(max-width:760px){
-  .variety-grid{grid-template-columns:1fr;max-width:360px;}
-  .flow img{height:230px;width:310px;}
-  .portrait{height:320px;}
+.reveal.in {
+  opacity: 1;       /* JSでこのクラスが付いたら表示 */
+  transform: none;  /* 位置を元に戻す */
+}
+
+/* ---- レスポンシブ（画面幅760px以下） ---- */
+@media (max-width: 760px) {
+  .variety-grid {
+    grid-template-columns: 1fr;   /* 3列 → 1列に変更 */
+    max-width: 360px;             /* 最大幅を小さく */
+  }
+
+  .flow img {
+    height: 230px;  /* 写真の高さを小さく */
+    width: 310px;   /* 写真の幅を小さく */
+  }
+
+  .ev-block {
+    grid-template-columns: 1fr; /* 2列 → 1列に変更 */
+    gap: 28px;                  /* 隙間を小さく */
+    margin-bottom: 50px;        /* 下の余白を小さく */
+  }
+  .sp {
+    display: block; /* スマホのときだけ表示する */
+  }
+
+  .ev-rev .ev-photo,
+  .ev-rev .ev-content {
+    order: unset; /* スマホでは順番をリセット（写真が常に上） */
+  }
+  .event .sec-head h2 {
+    font-size: 20px; /* タイトルを小さく */
+  }
+
+  .ev-rev .ev-content {
+    flex-direction: row; /* スマホでは元の横並びに戻す */
+  }
+
+  .portrait {
+    height: 320px; /* 縦写真の高さを小さく */
+  }
+
   .tate {
-    flex-direction: column; /* ここで縦並びにする */
+    flex-direction: column; /* 縦書きテキストを縦並びに変更 */
     height: auto;           /* 固定の高さを解除 */
     gap: 20px;              /* 縦並びの時の隙間 */
   }
-  .lead {
-    word-break: keep-all; /* 単語の途中で改行しない */
-    text-align: center;   /* 中央寄せで整える */
-    line-height: 1.5;     /* 行間を広げて読みやすく */
-    }
-  .info-grid{grid-template-columns:1fr;}
+  .access {
+    padding-top: 40px;
+    padding-bottom: 40px; /* 下の内側余白を小さく */
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr; /* 2列 → 1列に変更 */
+  }
 }
 
 /* ---- アニメーションを控えたい設定の人向け ---- */
-@media (prefers-reduced-motion: reduce){
-  .reveal{opacity:1;transform:none;transition:none;}
-  .scroll-cue .ln::after{animation:none;}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;       /* スクロールアニメーションを無効化（最初から表示） */
+    transform: none;  /* ずれをリセット */
+    transition: none; /* トランジションを無効化 */
+  }
+
+  .scroll-cue .ln::after {
+    animation: none; /* スクロールキューのアニメーションを無効化 */
+  }
 }
